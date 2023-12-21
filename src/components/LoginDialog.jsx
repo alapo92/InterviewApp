@@ -51,17 +51,22 @@ const LoginDialog = () => {
     setIsSignup(true)
     setOpen(true)
   }
-  const handleLogin = () => {
-    // Handle login logic here
-    console.log(`Username: ${username}, Password: ${password}`)
-    setIsLoggedIn(true)
-    handleClose()
-  }
 
   const handleSignup = () => {
     // Handle signup logic here
     console.log(`Signup - Username: ${username}, Password: ${password}`)
     handleClose()
+    setPassword('')
+    setUsername('')
+  }
+
+  const handleLogin = () => {
+    // Handle login logic here
+    console.log(`Username: ${username}, Password: ${password}`)
+    setIsLoggedIn(true)
+    handleClose()
+    setPassword('')
+    setUsername('')
   }
 
   const handleLogout = () => {
