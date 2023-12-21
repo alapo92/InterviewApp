@@ -33,25 +33,62 @@ const Button = styled.button`
 
 const LoginDialog = () => {
   const [open, setOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isSignup, setIsSignup] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-    const toggleOpen = () => {
-        setOpen(!open)
-    }
+  const handleClose = () => {
+    setOpen(false)
+  }
 
+  const toggleLogin = () => {
+    setIsSignup(false)
+    setOpen(true)
+  }
+
+  const toggleSignup = () => {
+    setIsSignup(true)
+    setOpen(true)
+  }
   const handleLogin = () => {
     // Handle login logic here
     console.log(`Username: ${username}, Password: ${password}`)
-    toggleOpen()
+    setIsLoggedIn(true)
+    handleClose()
   }
 
-  if (!open) return <Button onClick={toggleOpen}>Login</Button>
+  const handleSignup = () => {
+    // Handle signup logic here
+    console.log(`Signup - Username: ${username}, Password: ${password}`)
+    handleClose()
+  }
+
+  const handleLogout = () => {
+    // Handle logout logic here
+    console.log(`Logout`)
+    setIsLoggedIn(false)
+  }
+
+  if (!open && isLoggedIn)
+    return (
+      <>
+        <p>Welcome back {username} !</p>
+        <Button onClick={handleLogout}>Logout</Button>
+      </>
+    )
+  if (!open)
+    return (
+      <div>
+        <Button onClick={toggleLogin}>Login</Button>
+        <Button onClick={toggleSignup}>Signup</Button>
+      </div>
+    )
 
   return (
     <DialogOverlay>
       <DialogContent>
-        <h2>Login</h2>
+        <h2>{isSignup ? 'Signup' : 'Login'}</h2>
         <TextField
           autoFocus
           type='text'
@@ -65,8 +102,10 @@ const LoginDialog = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button onClick={toggleOpen}>Cancel</Button>
-        <Button onClick={handleLogin}>Login</Button>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={isSignup ? handleSignup : handleLogin}>
+          {isSignup ? 'Signup' : 'Login'}
+        </Button>
       </DialogContent>
     </DialogOverlay>
   )
