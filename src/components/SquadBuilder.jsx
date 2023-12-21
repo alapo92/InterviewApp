@@ -5,22 +5,29 @@ import styled from 'styled-components'
 
 const PageWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 2rem;
-  width: 80vw;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
+
+  /* Medium devices (landscape tablets, 768px and up) */
+    @media (min-width: 768px) {
+        flex-direction: row;
+        justify-content: center;
+    }
 `
 
 const StyledList = styled.ul`
-    list-style: none;
-    text-align: left;
+  list-style: none;
+  text-align: left;
+  align-self: baseline;
 `
 
 const ButtonRemove = styled.button`
-    border-radius: 50%;
-    background-color: red;
-    color: white;
-    margin-right: 15px;;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  margin-right: 15px;
 `
 
 const SquadBuilder = () => {
@@ -55,9 +62,12 @@ const SquadBuilder = () => {
 
   const SquadMemberList = squad ? (
     <StyledList>
-        <h2>My Squad</h2>
+      <h2>My Squad</h2>
       {squad.map((member) => (
-        <li key={member.id}><ButtonRemove onClick={() => handleRemove(member.id)}>-</ButtonRemove>{member.name}</li>
+        <li key={member.id}>
+          <ButtonRemove onClick={() => handleRemove(member.id)}>-</ButtonRemove>
+          {member.name}
+        </li>
       ))}
     </StyledList>
   ) : (

@@ -3,18 +3,30 @@ import { useState } from 'react'
 import styled from 'styled-components'
 
 const TableWrapper = styled.div`
-  max-height: 50vh;
+  max-height: 30vh;
   overflow: auto;
   text-align: left;
+  border: 1px solid white;
+  border-radius: 5px;
 `
 
 const PageWrapper = styled.div`
   display: flex;
-  gap: 40px;
+  flex-direction: column;
 `
 
 const DetailsWrapper = styled.div`
-  width: 400px;
+  width: 80vw;
+  display: flex;
+  @media (min-width: 768px) {
+        width: 22rem;
+    }
+`
+
+const DetailsList = styled.ul`
+  list-style: none;
+  text-align: left;
+  padding-left: 10px;
 `
 
 const ScrollableHead = styled.thead`
@@ -27,6 +39,8 @@ const ScrollableHead = styled.thead`
 
 const SearchBar = styled.input`
   width: 100%;
+  border: 1px solid white;
+  border-radius: 5px;
 `
 
 const AddButton = styled.button`
@@ -77,29 +91,17 @@ const CharacterList = (props) => {
     if (displayDetails) {
       return (
         <DetailsWrapper>
-          <table>
-            <thead>
-              <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Mass</th>
-                <th>Height</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <img
-                    src={character.image}
-                    alt='n/a'
-                  />
-                </td>
-                <td>{character.name}</td>
-                <td>{character.mass ?? 'n/a'}</td>
-                <td>{character.height ?? 'n/a'}</td>
-              </tr>
-            </tbody>
-          </table>
+          <img
+            src={character.image}
+            alt='n/a'
+          />
+            <DetailsList>
+              <li>Name: {character.name}</li>
+              <li>Eye Color: {character.eyeColor ?? 'n/a'}</li>
+              <li>Height: {character.height ?? 'n/a'}</li>
+              <li>Mass: {character.mass ?? 'n/a'}</li>
+              <li>Species: {character.species?.name ?? 'human'}</li>
+            </DetailsList>
         </DetailsWrapper>
       )
     } else
