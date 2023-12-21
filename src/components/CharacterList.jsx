@@ -83,7 +83,7 @@ const CharacterList = (props) => {
 
   let characters = data.allPeople
 
-  const handleClick = (char) => {
+  const handleAddtoSquad = (char) => {
     props.onCharaterAdd(char)
   }
 
@@ -107,12 +107,12 @@ const CharacterList = (props) => {
     } else
       return (
         <DetailsWrapper>
-          <h2> hover over a character</h2>
+          <h2> Click on character's name to display details</h2>
         </DetailsWrapper>
       )
   }
 
-  const handleHover = (char) => {
+  const handleDetailsClick = (char) => {
     setDisplayDetails(true)
     setCharacter(char)
   }
@@ -152,13 +152,13 @@ const CharacterList = (props) => {
                 .map((character) => (
                   <tr
                     key={character.id}
-                    onMouseOver={() => handleHover(character)}
-                    // onMouseOut={() => setDisplayDetails(false)}
+                    // onMouseOver={() => handleDetailsClick(character)}
+                    onClick={() => handleDetailsClick(character)}
                   >
                     <td>{character.name}</td>
                     <td>{character.species?.name ?? 'human'}</td>
                     <td>
-                      <AddButton onClick={() => handleClick(character)}>
+                      <AddButton onClick={() => handleAddtoSquad(character)}>
                         {' '}
                         +{' '}
                       </AddButton>
