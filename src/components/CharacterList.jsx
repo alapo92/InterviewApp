@@ -17,6 +17,7 @@ const PageWrapper = styled.div`
 
 const DetailsWrapper = styled.div`
   width: 80vw;
+  padding-top: 0.5rem;
   display: flex;
   @media (min-width: 768px) {
     width: 22rem;
