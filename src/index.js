@@ -3,16 +3,40 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App'
 
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
+import { AuthProvider } from './context/authContext'
+
+const httpLink = createHttpLink({
+  uri: 'https://fe-case-study.vercel.app/api/graphql',
+})
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token')
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  }
+})
 
 const client = new ApolloClient({
-  uri: 'https://fe-case-study.vercel.app/api/graphql',
+  link: authLink.concat(httpLink),
+  // uri: 'https://fe-case-study.vercel.app/api/graphql',
   cache: new InMemoryCache(),
 })
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>
+  <AuthProvider>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </AuthProvider>
 )

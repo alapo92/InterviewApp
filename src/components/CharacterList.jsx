@@ -19,8 +19,8 @@ const DetailsWrapper = styled.div`
   width: 80vw;
   display: flex;
   @media (min-width: 768px) {
-        width: 22rem;
-    }
+    width: 22rem;
+  }
 `
 
 const DetailsList = styled.ul`
@@ -95,13 +95,13 @@ const CharacterList = (props) => {
             src={character.image}
             alt='n/a'
           />
-            <DetailsList>
-              <li>Name: {character.name}</li>
-              <li>Eye Color: {character.eyeColor ?? 'n/a'}</li>
-              <li>Height: {character.height ?? 'n/a'}</li>
-              <li>Mass: {character.mass ?? 'n/a'}</li>
-              <li>Species: {character.species?.name ?? 'human'}</li>
-            </DetailsList>
+          <DetailsList>
+            <li>Name: {character.name}</li>
+            <li>Eye Color: {character.eyeColor ?? 'n/a'}</li>
+            <li>Height: {character.height ?? 'n/a'}</li>
+            <li>Mass: {character.mass ?? 'n/a'}</li>
+            <li>Species: {character.species?.name ?? 'human'}</li>
+          </DetailsList>
         </DetailsWrapper>
       )
     } else
