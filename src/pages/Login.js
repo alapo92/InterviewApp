@@ -22,7 +22,6 @@ const Login = () => {
   const [errors, setErrors] = useState([])
 
   const loginCallback = () => {
-    console.log('login callback')
     login()
   }
 
@@ -33,7 +32,6 @@ const Login = () => {
 
   const [login, { loading }] = useMutation(LOGIN, {
     update(proxy, { data: { login: AuthenticatedUser } }) {
-      console.log('authUser', AuthenticatedUser)
       context.login(AuthenticatedUser)
       navigate('/')
     },
