@@ -1,6 +1,7 @@
-import React from 'react'
+import { useContext } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../context/authContext'
 
 const NavbarContainer = styled.nav`
   display: flex;
@@ -26,18 +27,27 @@ const StyledLink = styled(Link)`
 `
 
 const Navbar = () => {
+  let navigate = useNavigate()
+  const { user, logout } = useContext(AuthContext)
+  const onLogout = () => {
+    logout()
+    navigate('/')
+  }
   return (
     <NavbarContainer>
       <StyledLink to='/'>
         <h1>Squad Builder</h1>
       </StyledLink>
       <NavLinks>
+        {user ? <>
+        <button onClick={onLogout}>Logout</button>
+        </> : <>
         <NavLink>
           <StyledLink to='/login'>Login</StyledLink>
         </NavLink>
         <NavLink>
           <StyledLink to='/register'>Register</StyledLink>
-        </NavLink>
+        </NavLink></>}
       </NavLinks>
     </NavbarContainer>
   )

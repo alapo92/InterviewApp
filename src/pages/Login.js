@@ -4,53 +4,49 @@ import { useMutation, gql } from '@apollo/client'
 import { useForm } from '../utility/formHooks'
 import { useNavigate } from 'react-router-dom'
 
-const SIGNUP = gql`
-  mutation Signup($email: String!, $password: String!) {
-    signup(email: $email, password: $password) {
-        user {
-            id
-            email
-        }
-        token
+const LOGIN = gql`
+  mutation Login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      user {
+        id
+        email
+      }
+      token
     }
   }
 `
 
-const Signup = () => {
+const Login = () => {
   const context = useContext(AuthContext)
   let navigate = useNavigate()
   const [errors, setErrors] = useState([])
 
-  const signupCallback = () => {
-    console.log('signup callback')
-    signup()
+  const loginCallback = () => {
+    console.log('login callback')
+    login()
   }
 
-    const { onChange, onSubmit, values } = useForm(signupCallback,{
-        email: '',
-        password: '',
-    })
+  const { onChange, onSubmit, values } = useForm(loginCallback, {
+    email: '',
+    password: '',
+  })
 
-
-
-  const [signup, { loading }] = useMutation(SIGNUP, {
-    update(proxy, { data: { signup: AuthenticatedUser } }) {
+  const [login, { loading }] = useMutation(LOGIN, {
+    update(proxy, { data: { login: AuthenticatedUser } }) {
       console.log('authUser', AuthenticatedUser)
       context.login(AuthenticatedUser)
       navigate('/')
     },
-    onError({graphQLErrors}) {
+    onError({ graphQLErrors }) {
       setErrors(graphQLErrors)
     },
     variables: { email: values.email, password: values.password },
   })
 
-
-
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <h1>Register</h1>
+        <h1>Login</h1>
         <input
           type='text'
           name='email'
@@ -65,11 +61,9 @@ const Signup = () => {
           value={values.password}
           onChange={onChange}
         />
-        <button type='submit' disabled={loading}>
-          Signup
-        </button>
+        <button type='submit' disabled={loading}>Login</button>
       </form>
-      {errors.map((error) => (
+        {errors.map((error) => (
             <div key={error.message}>{error.message}</div>
         ))}
     </div>
@@ -77,4 +71,4 @@ const Signup = () => {
 }
 
 
-export default Signup
+export default Login
